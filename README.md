@@ -1,11 +1,11 @@
 # Personal Tunnel
 
-Build repository for the modified iOS VPN client
+Build repository for the modified iOS VPN client.
 
-`personal-tunnel-source.bundle` contains the complete modified source and Git history
+`personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `422d7fb7e5df64c3cb2f47c0a78f2d922a2840a2`
-Bundle SHA-256: `d39b596df7fdbedb32cadedf232262bfbc2e946c41c06508b1a162c4f6debf19`
+Source commit: `082171c20f9f58ed214da6e17b3e5c889c30e269`
+Bundle SHA-256: `2b58137047e79a3a7c7c100b59919e5616f167e46bb2b50e38e3e2ccdef7569c`
 
 Recover a source checkout:
 
@@ -15,6 +15,8 @@ cd source
 git submodule update --init --recursive
 ```
 
-This revision adjusts native Modern tab-bar placement, server-list motion and startup, TCP/UDP summaries, versioned uTLS fingerprints and supported import formats. Detailed changes and verification limits: `docs/device/2026-10-30-startup-import-motion.md` inside the source checkout
+This revision updates server-list motion and press bounds, server swipe ping, subscription-scoped ordering, native server field editing, manual connection after server selection, and analytics actions. Detailed changes and verification limits: `docs/device/2026-10-30-server-editing-and-selection.md` in the source checkout.
 
-The workflow verifies the bundle hash and exact source commit, runs parser tests, builds the pinned Libbox core, compiles iOS and packages an unsigned IPA. Local static checks passed; this workspace has no Swift/Xcode. Device behavior and the reported private subscription TLS failure remain to be verified. No signing credentials or private subscription URLs are included. The IPA requires valid app and Network Extension signing before installation
+135 parser/regression tests passed with Swift 6.0.3 in a Linux-adapted isolated copy; changed Swift files passed iOS-targeted syntax parsing. The full parser package requires macOS because its existing Libbox stub uses a Darwin pointer type. No iOS SDK/Xcode or device verification is available locally. The workflow runs parser tests, builds the pinned Libbox core, compiles iOS and packages an unsigned IPA. The IPA requires valid app and Network Extension signing before installation. No private subscription URLs or signing credentials are included.
+
+Import follow-up: multi-node provider/HWID refusal detection, URL-safe VMess Base64 and explicit HTTP(S) proxy links. Evidence and limits: `docs/device/2026-10-30-subscription-hwid-and-formats.md`. The user-authorized diagnostic HWID request returned 36 Xray profiles. Fixed a TLS-fragment byte-range-to-duration conversion defect; the resulting 36-leaf graph passes the checksum-verified pinned Linux core check. Exact Xray fragmentation tuning is adapted to native ClientHello fragmentation with an explicit warning. iOS tunnel connectivity remains unverified.
