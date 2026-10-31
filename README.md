@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `d7713dfe0f4ba96935c32df32cc48225026c02da`
-Bundle SHA-256: `5a72d75af2be095cc9b5bedf8cb68824b6cab538a6651cd280aeeeda18844f59`
+Source commit: `42681ae44ebe1c70f981e38532db13babe99eb61`
+Bundle SHA-256: `15b9f7f7193a8db16ece360613c72a95ab741be753f6f071c8c5b8e9c9aa8610`
 
 Recover a source checkout:
 
@@ -40,3 +40,5 @@ Release correction 1.0.0 (160): analytics return pins child content without canc
 Release refinement 1.0.0 (161): native dismissal-start notification clears the held-row tint independently of menu content/action lifetime. Disclosure keeps the small-group 0.24-second timing and gradually lengthens to roughly 0.7 seconds for 30 servers and 1 second for 100+, with immediate reversal. 161 isolated regression tests passed. See `docs/device/2026-10-31-menu-highlight-and-large-group-timing.md`. Native timing remains device-unverified; compilation is triggered without monitoring completion under the standing user instruction.
 
 Release 1.0.1 (162): physical viewport-prefix disclosure replaces count-dependent full-height curves. Participating surfaces and native viewports remain stable during motion; anchored completion, reversal and structural-update guards preserve input geometry. Both actual pager hosts now stay fixed while snapshot pages move, with nested content locked until settling. Semantic release metadata is authoritative in `release-version.json`; `scripts/release_version.py` prepares patch/minor releases and validates every app/extension Info.plist. 157 Swift regression tests and 5 release-tool tests passed. See `docs/device/2026-10-31-motion-rebuild-101.md` and `docs/RELEASING.md`. Device animation/gesture verification is still required; iOS compilation is triggered without completion monitoring under the standing user instruction.
+
+Release 1.0.2 (163): live page rendering replaces snapshot transitions; compact swipe icons, unified expanded subscription backing and direct single-server rows. See `docs/device/2026-10-31-live-pages-and-unified-subscriptions.md`. iPhone interaction/rendering remains unverified.
