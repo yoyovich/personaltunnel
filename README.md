@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `1dcf8c8e7124ec8ff8e8483f723fee9132f5c2ff`
-Bundle SHA-256: `3f9b2bb617b355d5ab7d16d772b747145ba9bfe1af164a7c61bee5a00077f42a`
+Source commit: `41fe4c537c922f9dace2fae92894bbfea471d0dc`
+Bundle SHA-256: `01d419a2eb420d615d04c5a1f645842400ff32076ad0e89013dbd93d88b58241`
 
 Recover a source checkout:
 
@@ -17,7 +17,7 @@ git submodule update --init --recursive
 
 This revision updates server-list motion and press bounds, server swipe ping, subscription-scoped ordering, native server field editing, manual connection after server selection, and analytics actions. Detailed changes and verification limits: `docs/device/2026-10-30-server-editing-and-selection.md` in the source checkout.
 
-156 parser/regression tests passed with Swift 6.0.3 in a Linux-adapted isolated copy; changed Swift files passed iOS-targeted syntax parsing. The full parser package requires macOS because its existing Libbox stub uses a Darwin pointer type. No iOS SDK/Xcode or device verification is available locally. The workflow runs parser tests, builds the pinned Libbox core, compiles iOS and packages an unsigned IPA. The IPA requires valid app and Network Extension signing before installation. No private subscription URLs or signing credentials are included.
+158 parser/regression tests passed with Swift 6.0.3 in a Linux-adapted isolated copy; changed Swift files passed iOS-targeted syntax parsing. The full parser package requires macOS because its existing Libbox stub uses a Darwin pointer type. No iOS SDK/Xcode or device verification is available locally. The workflow runs parser tests, builds the pinned Libbox core, compiles iOS and packages an unsigned IPA. The IPA requires valid app and Network Extension signing before installation. No private subscription URLs or signing credentials are included.
 
 Import follow-up: multi-node provider/HWID refusal detection, URL-safe VMess Base64 and explicit HTTP(S) proxy links. Evidence and limits: `docs/device/2026-10-30-subscription-hwid-and-formats.md`. The user-authorized diagnostic HWID request returned 36 Xray profiles. Fixed a TLS-fragment byte-range-to-duration conversion defect; the resulting 36-leaf graph passes the checksum-verified pinned Linux core check. Exact Xray fragmentation tuning is adapted to native ClientHello fragmentation with an explicit warning. iOS tunnel connectivity remains unverified.
 
@@ -34,3 +34,5 @@ Disclosure correction 1.0.0 (157): stable inner row snapshots throughout collaps
 Disclosure revision 1.0.0 (158): tap handlers read live persisted expansion state, preventing a cached row from restoring a previously closed group. Fixed-position headers and unified server body cards use bounded 0.24-second reversible frame animation, with no per-frame native table batches. 153 isolated tests passed. See `docs/device/2026-10-31-live-disclosure-and-unified-body.md`. Device rendering and gestures remain unverified; compilation is triggered without completion monitoring per user instruction.
 
 Release polish 1.0.0 (159): first-sample analytics edge handoff, native hold-menu action delivery, Edit/Ping/Delete server swipe and swipe reset on closure. Configuration editor follows the supplied icon/group reference. Darker unified server panels reveal over a fixed native viewport with gradual large-list geometry and ProMotion support. 156 isolated regression tests passed. See `docs/device/2026-10-31-release-polish.md`. Native interaction timing and appearance remain device-unverified; iOS compilation is triggered without monitoring completion under the standing user instruction.
+
+Release correction 1.0.0 (160): analytics return pins child content without cancelling its pan, removes the initial recognition-slop jump and uses stable snapshot rendering during interactive movement. Lighter expanded server panels and a row-scoped tap target on the existing ping/timeout value recheck only that node. 158 isolated regression tests passed. See `docs/device/2026-10-31-analytics-drag-and-ping-tap.md`. Actual iPhone gestures/rendering and hit targets remain device-unverified; compilation is triggered without completion monitoring under the standing user instruction.
