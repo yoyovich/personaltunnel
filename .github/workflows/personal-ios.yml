@@ -65,6 +65,11 @@ jobs:
           xcrun --sdk iphoneos --show-sdk-version
           echo "stamp=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
 
+      - name: Release metadata checks
+        run: |
+          python3 scripts/release_version.py check
+          python3 -m unittest discover -s scripts/tests -p 'test_release_version.py'
+
       - name: Parser and redaction tests
         run: bash scripts/check_swift_parser_tests.sh
 
@@ -115,14 +120,11 @@ jobs:
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          import pathlib, shutil, plistlib
+          import pathlib, shutil, subprocess, sys
           apps = list(pathlib.Path('build/DerivedData/Build/Products/Release-iphoneos').glob('*.app'))
           if len(apps) != 1:
               raise SystemExit(f'Expected one iOS app, got {len(apps)}')
-          for product in [apps[0], *apps[0].glob('PlugIns/*.appex')]:
-              info = plistlib.loads((product / 'Info.plist').read_bytes())
-              if info.get('CFBundleShortVersionString') != '1.0.0' or info.get('CFBundleVersion') != '161':
-                  raise SystemExit(f'Unexpected release metadata in {product.name}')
+          subprocess.run([sys.executable, 'scripts/release_version.py', 'check', '--app', str(apps[0])], check=True)
           payload = pathlib.Path('build/ipa/Payload')
           payload.mkdir(parents=True, exist_ok=True)
           shutil.copytree(apps[0], payload / apps[0].name, symlinks=True)
