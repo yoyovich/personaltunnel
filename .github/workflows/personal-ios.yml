@@ -121,7 +121,7 @@ jobs:
               raise SystemExit(f'Expected one iOS app, got {len(apps)}')
           for product in [apps[0], *apps[0].glob('PlugIns/*.appex')]:
               info = plistlib.loads((product / 'Info.plist').read_bytes())
-              if info.get('CFBundleShortVersionString') != '1.0.0' or info.get('CFBundleVersion') != '157':
+              if info.get('CFBundleShortVersionString') != '1.0.0' or info.get('CFBundleVersion') != '158':
                   raise SystemExit(f'Unexpected release metadata in {product.name}')
           payload = pathlib.Path('build/ipa/Payload')
           payload.mkdir(parents=True, exist_ok=True)
