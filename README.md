@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `dc681869ff79fc43a664ab92d691ac60ca57e4c8`
-Bundle SHA-256: `c3b15e32ab41390e57cba6c1d60b7296c8ddcf02a4648a3116145a166f7bf09d`
+Source commit: `9f46198627e2cd79a725540981d7dabb341de6d0`
+Bundle SHA-256: `6be3b2d5db4fc7cc2d5315b7015dd444af27dea9de8f5d158acc4588dfd19c41`
 
 Recover a source checkout:
 
@@ -44,3 +44,5 @@ Release 1.0.1 (162): physical viewport-prefix disclosure replaces count-dependen
 Release 1.0.2 (163): live page rendering replaces snapshot transitions; compact swipe icons, unified expanded subscription backing and direct single-server rows. See `docs/device/2026-10-31-live-pages-and-unified-subscriptions.md`. iPhone interaction/rendering remains unverified.
 
 Release 1.0.3 (164): fixed-width disclosure content, immediate deferred live-page updates, scalar pager motion, standalone ping/pinning/deletion, selected-row cache correction and safe traffic-counter conversion. 162 isolated Swift regression tests and 5 version-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-regression-audit-103.md`. Native iPhone behavior remains unverified; compilation is triggered without completion monitoring under the standing user instruction.
+
+Release 1.0.4 (165): targeted server swipe footprint matching with subscription contextual actions preserved, stable analytics viewport/scroll insets during live paging, and a continuous last-corner-height blend on disclosure collapse. Disclosure timing and final style remain unchanged. 166 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-targeted-animation-fixes-104.md`. Native visual/gesture matching requires device verification; compilation is triggered without completion monitoring under the standing user instruction.
