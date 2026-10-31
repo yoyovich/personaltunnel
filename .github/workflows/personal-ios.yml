@@ -115,10 +115,14 @@ jobs:
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          import pathlib, shutil
+          import pathlib, shutil, plistlib
           apps = list(pathlib.Path('build/DerivedData/Build/Products/Release-iphoneos').glob('*.app'))
           if len(apps) != 1:
               raise SystemExit(f'Expected one iOS app, got {len(apps)}')
+          for product in [apps[0], *apps[0].glob('PlugIns/*.appex')]:
+              info = plistlib.loads((product / 'Info.plist').read_bytes())
+              if info.get('CFBundleShortVersionString') != '1.0.0' or info.get('CFBundleVersion') != '156':
+                  raise SystemExit(f'Unexpected release metadata in {product.name}')
           payload = pathlib.Path('build/ipa/Payload')
           payload.mkdir(parents=True, exist_ok=True)
           shutil.copytree(apps[0], payload / apps[0].name, symlinks=True)
