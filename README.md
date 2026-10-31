@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `7709876ad02ea2681e24da2974f251964d459013`
-Bundle SHA-256: `38ee0799b8eaf35205a71d79912f47bb979b069bce5cafdf9c26f88f97eed50d`
+Source commit: `6409c4b2a240ae87cfab113894a47f23538d60c2`
+Bundle SHA-256: `7e626b2044fed198a213fb2bc01508bbbeea7c0bfabf5153c659b239b2484af8`
 
 Recover a source checkout:
 
@@ -48,3 +48,5 @@ Release 1.0.3 (164): fixed-width disclosure content, immediate deferred live-pag
 Release 1.0.4 (165): targeted server swipe footprint matching with subscription contextual actions preserved, stable analytics viewport/scroll insets during live paging, and a continuous last-corner-height blend on disclosure collapse. Disclosure timing and final style remain unchanged. 166 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-targeted-animation-fixes-104.md`. Native visual/gesture matching requires device verification; compilation is triggered without completion monitoring under the standing user instruction.
 
 Release 1.0.5 (166): fixes the missing UIView gestureRecognizerShouldBegin override diagnosed from the failed native 1.0.4 build artifact. Release metadata validated; compilation retriggered without completion monitoring.
+
+Release 1.0.6 (167): server and subscription swipe panels remain independently open; analytics safe-area resolution uses the attached stationary window viewport, with guarded hosting compensation and scroll inset restoration preserving content distance. Existing pager gesture/transform/settling/positioning function bodies remain unchanged. 170 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-independent-swipes-and-safe-area-106.md`. Native visual positioning remains device-unverified; compilation is triggered without completion monitoring under the standing user instruction.
