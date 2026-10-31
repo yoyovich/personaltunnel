@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `9f46198627e2cd79a725540981d7dabb341de6d0`
-Bundle SHA-256: `6be3b2d5db4fc7cc2d5315b7015dd444af27dea9de8f5d158acc4588dfd19c41`
+Source commit: `7709876ad02ea2681e24da2974f251964d459013`
+Bundle SHA-256: `38ee0799b8eaf35205a71d79912f47bb979b069bce5cafdf9c26f88f97eed50d`
 
 Recover a source checkout:
 
@@ -46,3 +46,5 @@ Release 1.0.2 (163): live page rendering replaces snapshot transitions; compact 
 Release 1.0.3 (164): fixed-width disclosure content, immediate deferred live-page updates, scalar pager motion, standalone ping/pinning/deletion, selected-row cache correction and safe traffic-counter conversion. 162 isolated Swift regression tests and 5 version-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-regression-audit-103.md`. Native iPhone behavior remains unverified; compilation is triggered without completion monitoring under the standing user instruction.
 
 Release 1.0.4 (165): targeted server swipe footprint matching with subscription contextual actions preserved, stable analytics viewport/scroll insets during live paging, and a continuous last-corner-height blend on disclosure collapse. Disclosure timing and final style remain unchanged. 166 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-targeted-animation-fixes-104.md`. Native visual/gesture matching requires device verification; compilation is triggered without completion monitoring under the standing user instruction.
+
+Release 1.0.5 (166): fixes the missing UIView gestureRecognizerShouldBegin override diagnosed from the failed native 1.0.4 build artifact. Release metadata validated; compilation retriggered without completion monitoring.
