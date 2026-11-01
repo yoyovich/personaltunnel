@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `0a8d9c706c82acdba008814aefa06c1b91e81216`
-Bundle SHA-256: `742924610635219c271b8ac583d518dcc9b8eb617322b85cc2505246fee4d99d`
+Source commit: `b969496fb766598f797cc22a433323b2b7f76d1d`
+Bundle SHA-256: `90166204c785bdd7833de45fd524bb6c86b0967c522a07ab84be2a162f9041d1`
 
 Recover a source checkout:
 
@@ -52,3 +52,5 @@ Release 1.0.5 (166): fixes the missing UIView gestureRecognizerShouldBegin overr
 Release 1.0.6 (167): server and subscription swipe panels remain independently open; analytics safe-area resolution uses the attached stationary window viewport, with guarded hosting compensation and scroll inset restoration preserving content distance. Existing pager gesture/transform/settling/positioning function bodies remain unchanged. 170 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-independent-swipes-and-safe-area-106.md`. Native visual positioning remains device-unverified; compilation is triggered without completion monitoring under the standing user instruction.
 
 Release 1.0.7 (168): pager safe-area corrections are held through interactive movement and reconciled after final placement; settling starts after layout preparation. Disclosure continues through scrolling, coalesces content updates, and keeps staged viewports/targets valid during adjacent animations and reversals. Long-list lower-corner blending now spans several visible frames while short-list motion and existing styling are retained. 173 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-11-01-motion-continuity-107.md`. Native animation/geometry remains device-unverified; compilation is triggered without completion monitoring under the standing user instruction.
+
+Release 1.0.8 (169): unified predicted-display frame pacing with bounded missed-deadline advancement, content-offset-only page scroll locks, and atomic rounded subscription masks. Reviewed Apple CADisplayLink documentation before implementation. Two passes of 175 isolated regression tests passed, including 500 repeated transitions across refresh rates and a stalled collapse. Five version-tool tests and UI syntax parsing passed. See `docs/device/2026-11-01-frame-pacing-108.md`. Native visual smoothness remains device-unverified; compilation is triggered without completion monitoring.
