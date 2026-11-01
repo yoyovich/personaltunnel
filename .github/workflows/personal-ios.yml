@@ -69,9 +69,21 @@ jobs:
         run: |
           python3 scripts/release_version.py check
           python3 -m unittest discover -s scripts/tests -p 'test_release_version.py'
+          python3 scripts/check_ad_blocking_resources.py
 
       - name: Parser and redaction tests
         run: bash scripts/check_swift_parser_tests.sh
+
+      - name: Ad blocking with the pinned core and local DNS/HTTP fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          validation_core="$(python3 scripts/validation_core.py --directory build/validation-core)"
+          export SING_BOX="$validation_core"
+          export PERSONAL_TUNNEL_SOURCE_ROOT="$PWD"
+          export PERSONAL_AD_BLOCK_FIXTURE="$RUNNER_TEMP/personal-ad-block-fixture.json"
+          swift test --package-path tests/VPNDirectParserPackage --filter AdBlockingRoutingTests
+          python3 scripts/check_ad_blocking_core.py --core "$validation_core" --fixture "$PERSONAL_AD_BLOCK_FIXTURE"
 
       - name: Restore pinned Libbox cache
         id: libbox-cache
@@ -125,6 +137,7 @@ jobs:
           if len(apps) != 1:
               raise SystemExit(f'Expected one iOS app, got {len(apps)}')
           subprocess.run([sys.executable, 'scripts/release_version.py', 'check', '--app', str(apps[0])], check=True)
+          subprocess.run([sys.executable, 'scripts/check_ad_blocking_resources.py', '--app', str(apps[0])], check=True)
           payload = pathlib.Path('build/ipa/Payload')
           payload.mkdir(parents=True, exist_ok=True)
           shutil.copytree(apps[0], payload / apps[0].name, symlinks=True)

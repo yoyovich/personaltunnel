@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `b969496fb766598f797cc22a433323b2b7f76d1d`
-Bundle SHA-256: `90166204c785bdd7833de45fd524bb6c86b0967c522a07ab84be2a162f9041d1`
+Source commit: `d225c25dcb2213189fc0607aa60c9c32cede5333`
+Bundle SHA-256: `a18b08fa5972ff50c4170b50a9a8e46c51bd4c6ef80b8cd151835781773c4288`
 
 Recover a source checkout:
 
@@ -54,3 +54,5 @@ Release 1.0.6 (167): server and subscription swipe panels remain independently o
 Release 1.0.7 (168): pager safe-area corrections are held through interactive movement and reconciled after final placement; settling starts after layout preparation. Disclosure continues through scrolling, coalesces content updates, and keeps staged viewports/targets valid during adjacent animations and reversals. Long-list lower-corner blending now spans several visible frames while short-list motion and existing styling are retained. 173 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-11-01-motion-continuity-107.md`. Native animation/geometry remains device-unverified; compilation is triggered without completion monitoring under the standing user instruction.
 
 Release 1.0.8 (169): unified predicted-display frame pacing with bounded missed-deadline advancement, content-offset-only page scroll locks, and atomic rounded subscription masks. Reviewed Apple CADisplayLink documentation before implementation. Two passes of 175 isolated regression tests passed, including 500 repeated transitions across refresh rates and a stalled collapse. Five version-tool tests and UI syntax parsing passed. See `docs/device/2026-11-01-frame-pacing-108.md`. Native visual smoothness remains device-unverified; compilation is triggered without completion monitoring.
+
+Release 1.1.0 (170): default-on offline advertising-domain rejection in route and DNS rules, enforced on every tunnel start/reload with a shared Classic/Modern switch. Uses the ADBlock routing principle inspected in Anywhere; pinned public rule data, licenses and checksum are bundled. Motion work removes traffic/indicator-driven tab-root replacement, coalesces analytics updates during paging, measures a server-row prototype, and bounds rounded card/mask surfaces to the viewport. Two portable passes of 185 cases completed without failures (one core case skipped in each); the actual pinned-core case and repeated local HTTP/DNS integration pass separately, including more than 50 immediate DNS rejects. Five version-tool tests, UI syntax parsing, resource checks and project-reference validation pass. See `docs/device/2026-11-01-ad-blocking-motion-110.md` and `ThirdParty/AdBlocking` inside the source checkout. Physical iPhone frame pacing and on-demand/lock behavior still require device testing. Publishing triggers compilation without completion monitoring under the standing instruction.
