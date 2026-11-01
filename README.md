@@ -4,8 +4,8 @@ Build repository for the modified iOS VPN client.
 
 `personal-tunnel-source.bundle` contains the complete modified source and Git history.
 
-Source commit: `6409c4b2a240ae87cfab113894a47f23538d60c2`
-Bundle SHA-256: `7e626b2044fed198a213fb2bc01508bbbeea7c0bfabf5153c659b239b2484af8`
+Source commit: `0a8d9c706c82acdba008814aefa06c1b91e81216`
+Bundle SHA-256: `742924610635219c271b8ac583d518dcc9b8eb617322b85cc2505246fee4d99d`
 
 Recover a source checkout:
 
@@ -50,3 +50,5 @@ Release 1.0.4 (165): targeted server swipe footprint matching with subscription 
 Release 1.0.5 (166): fixes the missing UIView gestureRecognizerShouldBegin override diagnosed from the failed native 1.0.4 build artifact. Release metadata validated; compilation retriggered without completion monitoring.
 
 Release 1.0.6 (167): server and subscription swipe panels remain independently open; analytics safe-area resolution uses the attached stationary window viewport, with guarded hosting compensation and scroll inset restoration preserving content distance. Existing pager gesture/transform/settling/positioning function bodies remain unchanged. 170 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-10-31-independent-swipes-and-safe-area-106.md`. Native visual positioning remains device-unverified; compilation is triggered without completion monitoring under the standing user instruction.
+
+Release 1.0.7 (168): pager safe-area corrections are held through interactive movement and reconciled after final placement; settling starts after layout preparation. Disclosure continues through scrolling, coalesces content updates, and keeps staged viewports/targets valid during adjacent animations and reversals. Long-list lower-corner blending now spans several visible frames while short-list motion and existing styling are retained. 173 isolated Swift regression tests and 5 release-tool tests passed; changed UI files passed iOS-targeted syntax parsing. See `docs/device/2026-11-01-motion-continuity-107.md`. Native animation/geometry remains device-unverified; compilation is triggered without completion monitoring under the standing user instruction.
