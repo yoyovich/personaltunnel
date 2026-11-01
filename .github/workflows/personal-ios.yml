@@ -65,6 +65,15 @@ jobs:
           xcrun --sdk iphoneos --show-sdk-version
           echo "stamp=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
 
+      - name: Type-check motion diagnostics with the iOS SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          ios_sdk="$(xcrun --sdk iphoneos --show-sdk-path)"
+          xcrun --sdk iphoneos swiftc -typecheck -swift-version 5 \
+            -target arm64-apple-ios16.0 -sdk "$ios_sdk" \
+            ApplicationLibrary/Views/DirectUI/ModernMotionTrace.swift
+
       - name: Release metadata checks
         run: |
           python3 scripts/release_version.py check
