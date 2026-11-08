@@ -5,7 +5,7 @@
 Этот репозиторий собирает приложение. Полный изменённый исходный код с историей лежит в `personal-tunnel-source.bundle`.
 
 - Версия: **1.3.0 (173) beta 2 — PTBeta**
-- Коммит исходного кода: `f1fc79aae059b98e41dfd7c2780014bda5aca198`
+- Коммит исходного кода: `b59d280223fac57e25dfafd5955c590793a394a8`
 - Bundle ID: `com.personaltunnelapp`
 - Лицензия: GPL-3.0-or-later. Авторство sing-box и VPN Direct сохранено в `LICENSE` и `NOTICE`.
 
