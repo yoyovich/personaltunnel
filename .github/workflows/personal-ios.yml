@@ -99,7 +99,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: source/Libbox.xcframework
-          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/tags/**') }}
+          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/restrict_libbox_tags.py', 'source/scripts/tags/**') }}
 
       - name: Set up pinned Go
         if: steps.libbox-cache.outputs.cache-hit != 'true'
@@ -120,7 +120,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: source/Libbox.xcframework
-          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/tags/**') }}
+          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/restrict_libbox_tags.py', 'source/scripts/tags/**') }}
 
       - name: Compile unsigned iOS application
         shell: bash
@@ -134,6 +134,7 @@ jobs:
             -skipPackagePluginValidation -skipMacroValidation \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             APP_GROUP_IDENTIFIER=group.a69e6dc9a612eb7d.1 \
+            PERSONAL_SOURCE_COMMIT="$(git rev-parse HEAD)" \
             CODE_SIGN_IDENTITY= build 2>&1 | tee build/xcodebuild.log
 
       - name: Package unsigned IPA for subsequent signing
