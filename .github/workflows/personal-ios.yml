@@ -2,7 +2,7 @@ name: Personal Tunnel iOS
 
 on:
   push:
-    branches: [main]
+    branches: [main, ptbeta]
   workflow_dispatch:
 
 permissions:
@@ -99,7 +99,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: source/Libbox.xcframework
-          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/tags/**') }}
+          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/restrict_libbox_tags.py', 'source/scripts/tags/**') }}
 
       - name: Set up pinned Go
         if: steps.libbox-cache.outputs.cache-hit != 'true'
@@ -120,7 +120,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: source/Libbox.xcframework
-          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/tags/**') }}
+          key: libbox-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.xcode.outputs.stamp }}-${{ hashFiles('source/core/VERSION', 'source/core/overlays/**', 'source/scripts/build_libbox.sh', 'source/scripts/prepare_core.sh', 'source/scripts/apply_singbox_overlays.sh', 'source/scripts/restrict_libbox_tags.py', 'source/scripts/tags/**') }}
 
       - name: Compile unsigned iOS application
         shell: bash
@@ -134,12 +134,21 @@ jobs:
             -skipPackagePluginValidation -skipMacroValidation \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
             APP_GROUP_IDENTIFIER=group.a69e6dc9a612eb7d.1 \
+            PERSONAL_SOURCE_COMMIT="$(git rev-parse HEAD)" \
             CODE_SIGN_IDENTITY= build 2>&1 | tee build/xcodebuild.log
 
       - name: Package unsigned IPA for subsequent signing
         shell: bash
         run: |
           set -euo pipefail
+          IPA_VERSION="$(python3 -c "import json;d=json.load(open('release-version.json'));print(d['version'].replace('.','_')+'-'+str(d['build']))")"
+          BETA_NUMBER="$(sed -n 's/.*static let betaNumber = \([0-9][0-9]*\).*/\1/p' ApplicationLibrary/Views/DirectUI/PersonalNetworkActivityView.swift | head -1)"
+          if [ "${BETA_NUMBER:-0}" -gt 0 ]; then
+            IPA_NAME="PTBeta-${IPA_VERSION}-beta${BETA_NUMBER}-unsigned.ipa"
+          else
+            IPA_NAME="PersonalTunnel-${IPA_VERSION}-unsigned.ipa"
+          fi
+          echo "IPA_NAME=${IPA_NAME}" >> "$GITHUB_ENV"
           python3 - <<'PY'
           import pathlib, shutil, subprocess, sys
           apps = list(pathlib.Path('build/DerivedData/Build/Products/Release-iphoneos').glob('*.app'))
@@ -151,17 +160,17 @@ jobs:
           payload.mkdir(parents=True, exist_ok=True)
           shutil.copytree(apps[0], payload / apps[0].name, symlinks=True)
           PY
-          (cd build/ipa && /usr/bin/ditto -c -k --keepParent Payload ../PersonalTunnel-unsigned.ipa)
+          (cd build/ipa && /usr/bin/ditto -c -k --keepParent Payload "../${IPA_NAME}")
           git rev-parse HEAD > build/source-commit.txt
           cp core/VERSION build/core-pins.txt
-          shasum -a 256 build/PersonalTunnel-unsigned.ipa > build/SHA256SUMS
+          shasum -a 256 "build/${IPA_NAME}" > build/SHA256SUMS
 
       - name: Upload unsigned IPA and provenance
         uses: actions/upload-artifact@v4
         with:
           name: PersonalTunnel-unsigned-${{ github.run_number }}
           path: |
-            source/build/PersonalTunnel-unsigned.ipa
+            source/build/${{ env.IPA_NAME }}
             source/build/source-commit.txt
             source/build/core-pins.txt
             source/build/SHA256SUMS
