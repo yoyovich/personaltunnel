@@ -143,7 +143,11 @@ jobs:
           set -euo pipefail
           IPA_VERSION="$(python3 -c "import json;d=json.load(open('release-version.json'));print(d['version'].replace('.','_')+'-'+str(d['build']))")"
           BETA_NUMBER="$(sed -n 's/.*static let betaNumber = \([0-9][0-9]*\).*/\1/p' ApplicationLibrary/Views/DirectUI/PersonalNetworkActivityView.swift | head -1)"
-          IPA_NAME="PTBeta-${IPA_VERSION}-beta${BETA_NUMBER:-0}-unsigned.ipa"
+          if [ "${BETA_NUMBER:-0}" -gt 0 ]; then
+            IPA_NAME="PTBeta-${IPA_VERSION}-beta${BETA_NUMBER}-unsigned.ipa"
+          else
+            IPA_NAME="PersonalTunnel-${IPA_VERSION}-unsigned.ipa"
+          fi
           echo "IPA_NAME=${IPA_NAME}" >> "$GITHUB_ENV"
           python3 - <<'PY'
           import pathlib, shutil, subprocess, sys
